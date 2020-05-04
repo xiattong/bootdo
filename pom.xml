@@ -243,7 +243,6 @@
             <optional>true</optional>
             <scope>true</scope>
         </dependency>
-
         <!--war包部署需要-->
         <!--<dependency>-->
         <!--<groupId>org.springframework.boot</groupId>-->

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.exam.dao.PaperTemplateDao">
+
+	<select id="get" resultType="com.bootdo.exam.domain.PaperTemplateDO">
+		select `id`,`name`,`single_choice_amount`,`single_choice_score`,`multiple_choice_amount`,`multiple_choice_score`,`completion_amount`,`completion_score`,`full_score`,`answer_time` from exam_paper_template where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.exam.domain.PaperTemplateDO">
+		select `id`,`name`,`single_choice_amount`,`single_choice_score`,`multiple_choice_amount`,`multiple_choice_score`,`completion_amount`,`completion_score`,`full_score`,`answer_time` from exam_paper_template
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		  <if test="singleChoiceAmount != null and singleChoiceAmount != ''"> and single_choice_amount = #{singleChoiceAmount} </if>
+		  		  <if test="singleChoiceScore != null and singleChoiceScore != ''"> and single_choice_score = #{singleChoiceScore} </if>
+		  		  <if test="multipleChoiceAmount != null and multipleChoiceAmount != ''"> and multiple_choice_amount = #{multipleChoiceAmount} </if>
+		  		  <if test="multipleChoiceScore != null and multipleChoiceScore != ''"> and multiple_choice_score = #{multipleChoiceScore} </if>
+		  		  <if test="completionAmount != null and completionAmount != ''"> and completion_amount = #{completionAmount} </if>
+		  		  <if test="completionScore != null and completionScore != ''"> and completion_score = #{completionScore} </if>
+		  		  <if test="fullScore != null and fullScore != ''"> and full_score = #{fullScore} </if>
+		  		  <if test="answerTime != null and answerTime != ''"> and answer_time = #{answerTime} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from exam_paper_template
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		  <if test="singleChoiceAmount != null and singleChoiceAmount != ''"> and single_choice_amount = #{singleChoiceAmount} </if>
+		  		  <if test="singleChoiceScore != null and singleChoiceScore != ''"> and single_choice_score = #{singleChoiceScore} </if>
+		  		  <if test="multipleChoiceAmount != null and multipleChoiceAmount != ''"> and multiple_choice_amount = #{multipleChoiceAmount} </if>
+		  		  <if test="multipleChoiceScore != null and multipleChoiceScore != ''"> and multiple_choice_score = #{multipleChoiceScore} </if>
+		  		  <if test="completionAmount != null and completionAmount != ''"> and completion_amount = #{completionAmount} </if>
+		  		  <if test="completionScore != null and completionScore != ''"> and completion_score = #{completionScore} </if>
+		  		  <if test="fullScore != null and fullScore != ''"> and full_score = #{fullScore} </if>
+		  		  <if test="answerTime != null and answerTime != ''"> and answer_time = #{answerTime} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.exam.domain.PaperTemplateDO">
+		insert into exam_paper_template
+		(
+			`id`, 
+			`name`, 
+			`single_choice_amount`, 
+			`single_choice_score`, 
+			`multiple_choice_amount`, 
+			`multiple_choice_score`, 
+			`completion_amount`, 
+			`completion_score`, 
+			`full_score`, 
+			`answer_time`
+		)
+		values
+		(
+			#{id}, 
+			#{name}, 
+			#{singleChoiceAmount}, 
+			#{singleChoiceScore}, 
+			#{multipleChoiceAmount}, 
+			#{multipleChoiceScore}, 
+			#{completionAmount}, 
+			#{completionScore}, 
+			#{fullScore}, 
+			#{answerTime}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.exam.domain.PaperTemplateDO">
+		update exam_paper_template 
+		<set>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="singleChoiceAmount != null">`single_choice_amount` = #{singleChoiceAmount}, </if>
+			<if test="singleChoiceScore != null">`single_choice_score` = #{singleChoiceScore}, </if>
+			<if test="multipleChoiceAmount != null">`multiple_choice_amount` = #{multipleChoiceAmount}, </if>
+			<if test="multipleChoiceScore != null">`multiple_choice_score` = #{multipleChoiceScore}, </if>
+			<if test="completionAmount != null">`completion_amount` = #{completionAmount}, </if>
+			<if test="completionScore != null">`completion_score` = #{completionScore}, </if>
+			<if test="fullScore != null">`full_score` = #{fullScore}, </if>
+			<if test="answerTime != null">`answer_time` = #{answerTime}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from exam_paper_template where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from exam_paper_template where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

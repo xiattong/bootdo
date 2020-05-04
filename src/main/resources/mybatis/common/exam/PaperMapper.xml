@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.exam.dao.PaperDao">
+
+	<select id="get" resultType="com.bootdo.exam.domain.PaperDO">
+		select
+			ep.id,ep.title,ep.template_id,ep.single_choice_menu,ep.single_choice_key,
+			ep.multiple_choice_menu,ep.multiple_choice_key,ep.completion_menu,ep.completion_key,
+			ep.single_choice_score,ep.multiple_choice_score,ep.completion_score
+		from exam_paper ep
+		where ep.id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.exam.domain.PaperDO">
+		select
+		ep.id,ep.title,ep.template_id,ept.name as templateName,ep.single_choice_menu,ep.single_choice_key,
+		ep.multiple_choice_menu,ep.multiple_choice_key,ep.completion_menu,ep.completion_key,
+		ep.single_choice_score,ep.multiple_choice_score,ep.completion_score
+		from exam_paper ep
+		left join exam_paper_template ept on ep.template_id = ept.id
+        <where>  
+		  		  <if test="id != null and id != ''"> and ep.id = #{id} </if>
+		  		  <if test="title != null and title != ''"> and ep.title = #{title} </if>
+		  		  <if test="templateId != null and templateId != ''"> and ep.template_id = #{templateId} </if>
+		  		  <if test="singleChoiceMenu != null and singleChoiceMenu != ''"> and ep.single_choice_menu = #{singleChoiceMenu} </if>
+		  		  <if test="singleChoiceKey != null and singleChoiceKey != ''"> and ep.single_choice_key = #{singleChoiceKey} </if>
+		  		  <if test="multipleChoiceMenu != null and multipleChoiceMenu != ''"> and ep.multiple_choice_menu = #{multipleChoiceMenu} </if>
+		  		  <if test="multipleChoiceKey != null and multipleChoiceKey != ''"> and ep.multiple_choice_key = #{multipleChoiceKey} </if>
+		  		  <if test="completionMenu != null and completionMenu != ''"> and ep.completion_menu = #{completionMenu} </if>
+		  		  <if test="completionKey != null and completionKey != ''"> and ep.completion_key = #{completionKey} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ep.${sort} ${order}
+            </when>
+			<otherwise>
+                order by ep.id
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from exam_paper
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="title != null and title != ''"> and title = #{title} </if>
+		  		  <if test="templateId != null and templateId != ''"> and template_id = #{templateId} </if>
+		  		  <if test="singleChoiceMenu != null and singleChoiceMenu != ''"> and single_choice_menu = #{singleChoiceMenu} </if>
+		  		  <if test="singleChoiceKey != null and singleChoiceKey != ''"> and single_choice_key = #{singleChoiceKey} </if>
+		  		  <if test="multipleChoiceMenu != null and multipleChoiceMenu != ''"> and multiple_choice_menu = #{multipleChoiceMenu} </if>
+		  		  <if test="multipleChoiceKey != null and multipleChoiceKey != ''"> and multiple_choice_key = #{multipleChoiceKey} </if>
+		  		  <if test="completionMenu != null and completionMenu != ''"> and completion_menu = #{completionMenu} </if>
+		  		  <if test="completionKey != null and completionKey != ''"> and completion_key = #{completionKey} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.exam.domain.PaperDO">
+		insert into exam_paper
+		(
+			`id`, 
+			`title`, 
+			`template_id`, 
+			`single_choice_menu`, 
+			`single_choice_key`,
+			`single_choice_score`,
+			`multiple_choice_menu`, 
+			`multiple_choice_key`,
+			`multiple_choice_score`,
+			`completion_menu`, 
+			`completion_key`,
+			`completion_score`
+		)
+		values
+		(
+			#{id}, 
+			#{title}, 
+			#{templateId}, 
+			#{singleChoiceMenu}, 
+			#{singleChoiceKey},
+			#{singleChoiceScore},
+			#{multipleChoiceMenu}, 
+			#{multipleChoiceKey},
+			#{multipleChoiceScore},
+			#{completionMenu}, 
+			#{completionKey},
+			#{completionScore}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.exam.domain.PaperDO">
+		update exam_paper 
+		<set>
+			<if test="title != null">`title` = #{title}, </if>
+			<if test="templateId != null">`template_id` = #{templateId}, </if>
+			<if test="singleChoiceMenu != null">`single_choice_menu` = #{singleChoiceMenu}, </if>
+			<if test="singleChoiceKey != null">`single_choice_key` = #{singleChoiceKey}, </if>
+			<if test="multipleChoiceMenu != null">`multiple_choice_menu` = #{multipleChoiceMenu}, </if>
+			<if test="multipleChoiceKey != null">`multiple_choice_key` = #{multipleChoiceKey}, </if>
+			<if test="completionMenu != null">`completion_menu` = #{completionMenu}, </if>
+			<if test="completionKey != null">`completion_key` = #{completionKey}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from exam_paper where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from exam_paper where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

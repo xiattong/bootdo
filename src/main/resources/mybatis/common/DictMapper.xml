@@ -33,7 +33,7 @@
 				order by ${sort} ${order}
 			</when>
 			<otherwise>
-				order by id desc
+				order by sort
 			</otherwise>
 		</choose>
 		<if test="offset != null and limit != null">
@@ -64,33 +64,33 @@
 		useGeneratedKeys="true" keyProperty="id">
 		insert into sys_dict
 		(
-		`name`,
-		`value`,
-		`type`,
-		`description`,
-		`sort`,
-		`parent_id`,
-		`create_by`,
-		`create_date`,
-		`update_by`,
-		`update_date`,
-		`remarks`,
-		`del_flag`
+			`name`,
+			`value`,
+			`type`,
+			`description`,
+			`sort`,
+			`parent_id`,
+			`create_by`,
+			`create_date`,
+			`update_by`,
+			`update_date`,
+			`remarks`,
+			`del_flag`
 		)
 		values
 		(
-		#{name},
-		#{value},
-		#{type},
-		#{description},
-		#{sort},
-		#{parentId},
-		#{createBy},
-		#{createDate},
-		#{updateBy},
-		#{updateDate},
-		#{remarks},
-		#{delFlag}
+			#{name},
+			#{value},
+			#{type},
+			#{description},
+			#{sort},
+			#{parentId},
+			#{createBy},
+			#{createDate},
+			#{updateBy},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
 		)
 	</insert>
 

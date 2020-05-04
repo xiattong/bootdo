@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="col-sm-12">
+			<div class="ibox">
+				<div class="ibox-body">
+					<form class="form-horizontal m-t" id="signupForm">
+					<div class="fixed-table-toolbar">
+						<div class="columns pull-left">
+							<span class="block m-t-xs">
+								<h3>答卷人：<strong class="font-bold" th:text="${user.name}"></strong></h3>
+								<input type="hidden" name="userId" th:value="${user.userId}">
+								<input type="hidden" name="paperId" th:value="${paper.id}">
+							</span>
+						</div>
+						<div class="columns pull-right">
+							<button type="submit" class="btn btn-primary">提交试卷</button>
+						</div>
+					</div>
+					<table id="exampleTable" data-mobile-responsive="true" class="table table-striped">
+						<thead>
+							<tr><td><h2 th:text="${paper.title}"></h2></td></tr>
+						</thead>
+						<tbody>
+							<tr th:if="${paper.singleChoiceBank} != null"><th><h3>单选题</h3></th></tr>
+							<table class="table" th:if="${paper.singleChoiceBank} != null" th:each="item:${paper.singleChoiceBank}">
+								<tr>
+									<th colspan="2"><h4 th:text="${itemStat.index+1} +')&nbsp;&nbsp;'+${item.question}"></h4></th>
+								</tr>
+
+								<tr>
+									<td th:text="${item.optionsJson[0].name} +':'+ ${item.optionsJson[0].value}"></td>
+									<td th:text="${item.optionsJson[1].name} +':'+ ${item.optionsJson[1].value}"></td>
+								</tr>
+								<tr>
+									<td th:text="${item.optionsJson[2].name} +':'+ ${item.optionsJson[2].value}"></td>
+									<td th:text="${item.optionsJson[3].name} +':'+ ${item.optionsJson[3].value}"></td>
+								</tr>
+								<tr>
+									<td colspan="2" class="col-xs-4">
+										<input th:name="${item.id}" class="form-control single_choice_answer" type="text" placeholder="请填写答案"
+											   onkeyup="value=value.replace(/,/g,'') " >
+									</td>
+								</tr>
+							</table>
+							<input name="singleChoiceAnswer" class="form-control" type="hidden">
+
+							<tr th:if="${paper.multipleChoiceBank} != null"><th><h3>多选题</h3></th></tr>
+							<table class="table" th:if="${paper.multipleChoiceBank} != null" th:each="item:${paper.multipleChoiceBank}">
+								<tr>
+									<th colspan="2"><h4 th:text="${itemStat.index+1} +')&nbsp;&nbsp;'+${item.question}"></h4></th>
+								</tr>
+
+								<tr>
+									<td th:text="${item.optionsJson[0].name} +':'+ ${item.optionsJson[0].value}"></td>
+									<td th:text="${item.optionsJson[1].name} +':'+ ${item.optionsJson[1].value}"></td>
+								</tr>
+								<tr>
+									<td th:text="${item.optionsJson[2].name} +':'+ ${item.optionsJson[2].value}"></td>
+									<td th:text="${item.optionsJson[3].name} +':'+ ${item.optionsJson[3].value}"></td>
+								</tr>
+								<tr>
+									<td colspan="2" class="col-xs-4">
+										<input th:name="${item.id}" class="form-control multiple_choice_answer" type="text" placeholder="请填写答案"
+											   onkeyup="value=value.replace(/,/g,'') " >
+									</td>
+								</tr>
+							</table>
+							<input name="multipleChoiceAnswer" class="form-control" type="hidden">
+
+							<tr th:if="${paper.completionBank} != null"><th><h3>填空题</h3></th></tr>
+							<table class="table" th:if="${paper.completionBank} != null" th:each="item:${paper.completionBank}">
+								<tr>
+									<th colspan="2"><h4 th:text="${itemStat.index+1} +')&nbsp;&nbsp;'+${item.question}"></h4></th>
+								</tr>
+								<tr>
+									<td colspan="2" class="col-xs-4">
+										<input th:name="${item.id}" class="form-control completion_answer" type="text" placeholder="请填写答案"
+											   onkeyup="value=value.replace(/,/g,'') " >
+									</td>
+								</tr>
+							</table>
+							<input name="completionAnswer" class="form-control" type="hidden">
+
+						</tbody>
+					</table>
+					<div class="fixed-table-toolbar">
+						<div class="columns pull-right">
+							<button type="submit" class="btn btn-primary">提交试卷</button>
+						</div>
+					</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script type="text/javascript" src="/js/appjs/exam/paperAnswer/paperGrant.js"></script>
+</body>
+</html>
