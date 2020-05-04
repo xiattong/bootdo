@@ -17,9 +17,6 @@
 								</h3>
 							</span>
 						</div>
-						<div class="columns pull-right">
-							<button type="submit" class="btn btn-primary">提交试卷</button>
-						</div>
 					</div>
 					<table id="exampleTable" data-mobile-responsive="true" class="table table-striped">
 						<thead>
@@ -47,7 +44,7 @@
 									<h4 th:text="'正确答案：' + ${paper.singleChoiceKey}"></h4>
 								</td>
 							</tr>
-
+							<br/><br/>
 							<tr th:if="${paper.multipleChoiceBank} != null"><th><h3>多选题</h3></th></tr>
 							<table class="table" th:if="${paper.multipleChoiceBank} != null" th:each="item:${paper.multipleChoiceBank}">
 								<tr>
@@ -62,12 +59,6 @@
 									<td th:text="${item.optionsJson[2].name} +':'+ ${item.optionsJson[2].value}"></td>
 									<td th:text="${item.optionsJson[3].name} +':'+ ${item.optionsJson[3].value}"></td>
 								</tr>
-								<tr>
-									<td colspan="2" class="col-xs-4">
-										<input th:name="${item.id}" class="form-control multiple_choice_answer" type="text" placeholder="请填写答案"
-											   onkeyup="value=value.replace(/,/g,'') " >
-									</td>
-								</tr>
 							</table>
 							<tr>
 								<td colspan="2" class="col-xs-4">
@@ -75,17 +66,11 @@
 									<h4 th:text="'正确答案：' + ${paper.multipleChoiceKey}"></h4>
 								</td>
 							</tr>
-
+							<br/><br/>
 							<tr th:if="${paper.completionBank} != null"><th><h3>填空题</h3></th></tr>
 							<table class="table" th:if="${paper.completionBank} != null" th:each="item:${paper.completionBank}">
 								<tr>
 									<th colspan="2"><h4 th:text="${itemStat.index+1} +')&nbsp;&nbsp;'+${item.question}"></h4></th>
-								</tr>
-								<tr>
-									<td colspan="2" class="col-xs-4">
-										<input th:name="${item.id}" class="form-control completion_answer" type="text" placeholder="请填写答案"
-											   onkeyup="value=value.replace(/,/g,'') " >
-									</td>
 								</tr>
 							</table>
 							<tr>
@@ -97,11 +82,6 @@
 
 						</tbody>
 					</table>
-					<div class="fixed-table-toolbar">
-						<div class="columns pull-right">
-							<button type="submit" class="btn btn-primary">提交试卷</button>
-						</div>
-					</div>
 					</form>
 				</div>
 			</div>

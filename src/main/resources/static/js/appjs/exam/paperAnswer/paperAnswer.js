@@ -94,7 +94,7 @@ function load() {
 									formatter : function(value, row, index) {
 										var e = '<a class="btn btn-primary btn-sm" href="#" mce_href="#" title="查看" onclick="showPaper(\''
 												+ row.id
-												+ '\')"><i class="fa fa-edit"></i></a> ';
+												+ '\')"><i class="fa fa-search"></i></a> ';
 										return e;
 									}
 								} ]

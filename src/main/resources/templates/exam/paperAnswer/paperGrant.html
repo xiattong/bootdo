@@ -47,7 +47,7 @@
 								</tr>
 							</table>
 							<input name="singleChoiceAnswer" class="form-control" type="hidden">
-
+							<br/><br/>
 							<tr th:if="${paper.multipleChoiceBank} != null"><th><h3>多选题</h3></th></tr>
 							<table class="table" th:if="${paper.multipleChoiceBank} != null" th:each="item:${paper.multipleChoiceBank}">
 								<tr>
@@ -70,7 +70,7 @@
 								</tr>
 							</table>
 							<input name="multipleChoiceAnswer" class="form-control" type="hidden">
-
+							<br/><br/>
 							<tr th:if="${paper.completionBank} != null"><th><h3>填空题</h3></th></tr>
 							<table class="table" th:if="${paper.completionBank} != null" th:each="item:${paper.completionBank}">
 								<tr>
